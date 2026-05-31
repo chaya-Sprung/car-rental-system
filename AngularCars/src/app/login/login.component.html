@@ -1,0 +1,76 @@
+<header class="appbar">
+  <div class="appbar-content">
+    <span class="appbar-title">Easy CARS</span>
+    <nav>
+      <ul>
+        <li><a routerLink="/">Home</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="page">
+  <div class="login-box">
+    <h2>Customer Login</h2>
+    
+    <input id="userId" 
+           name="userId" 
+           placeholder="הכנס תעודת זהות" 
+           type="text" 
+           [(ngModel)]="searchId">
+
+    <button class="cool-btn" (click)="checkID()">
+      האם אני רשום אצלכם?
+    </button>
+    
+    <p *ngIf="errorMessage" style="color: red; margin-top: 10px;">{{ errorMessage }}</p>
+  </div>
+
+  <div *ngIf="customer" class="customer-card">
+    <h3>פרטי לקוח</h3>
+    <p><strong>ID:</strong> {{ customer.Id }}</p>
+    <p><strong>Name:</strong> {{ customer.firstName }} {{ customer.lastName }}</p>
+    <p><strong>Email:</strong> {{ customer.email }}</p>
+    <button class="cool-btn" routerLink="/display-cars">המשך לבחירת רכב</button>
+  </div>
+</div>
+
+<div *ngIf="showModal" class="modal">
+  <div class="modal-content">
+    <h2>רישום לקוח חדש</h2>
+    <form (ngSubmit)="submitNewCustomer()" #regForm="ngForm">
+      
+      <div class="form-group">
+        <label>תעודת זהות:</label>
+        <input [(ngModel)]="newCustomer.Id" name="Id" type="number" required readonly>
+      </div>
+
+      <div class="form-group">
+        <label>שם פרטי:</label>
+        <input [(ngModel)]="newCustomer.firstName" name="firstName" required>
+      </div>
+
+      <div class="form-group">
+        <label>שם משפחה:</label>
+        <input [(ngModel)]="newCustomer.lastName" name="lastName" required>
+      </div>
+
+      <div class="form-group">
+        <label>אימייל:</label>
+        <input [(ngModel)]="newCustomer.email" name="email" type="email" required>
+      </div>
+
+      <div class="form-group">
+        <label>קוד עיר:</label>
+        <input [(ngModel)]="newCustomer.idCity" name="idCity" type="number" required>
+      </div>
+
+      <div class="modal-buttons">
+        <button class="cool-btn" type="submit" [disabled]="!regForm.valid">שלח הרשמה</button>
+        <button class="close-btn" type="button" (click)="closeModal()">ביטול</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<router-outlet></router-outlet>

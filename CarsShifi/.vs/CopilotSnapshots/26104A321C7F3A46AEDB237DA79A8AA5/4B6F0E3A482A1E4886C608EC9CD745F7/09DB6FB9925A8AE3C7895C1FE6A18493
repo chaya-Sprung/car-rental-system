@@ -1,0 +1,100 @@
+﻿using BL.ClassesBL;
+using BL.ClassesDTO;
+using System.Collections.Generic;
+using System.Web.Http;
+
+namespace API.Controllers
+{
+    [RoutePrefix("api/city")]
+    [RoutePrefix("api/cities")]
+    public class CityController : ApiController
+    {
+        CitiesBL cbl = new CitiesBL();
+
+        [HttpGet]
+        [Route("getcitybyid/{cityCode}")]
+        [Route("getbyid/{cityCode}")]
+        public CitiesDTO GetCityById(int cityCode)
+        {
+            return cbl.GetCityById(cityCode);
+        }
+
+        [HttpPost]
+        [Route("add")]
+        public IHttpActionResult Add([FromBody] CitiesDTO c)
+        {
+            if (c == null)
+                return BadRequest("City data is null");
+
+            try
+            {
+                bool result = cbl.Add(c);
+                if (result)
+                    return Ok(new { success = true, message = "City added successfully" });
+                else
+                    return BadRequest("Failed to add city");
+            }
+            catch (System.Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpPost]
+        [Route("update")]
+        public IHttpActionResult Update([FromBody] CitiesDTO c)
+        {
+            if (c == null)
+                return BadRequest("City data is null");
+
+            try
+            {
+                bool result = cbl.Update(c);
+                if (result)
+                    return Ok(new { success = true, message = "City updated successfully" });
+                else
+                    return BadRequest("Failed to update city");
+            }
+            catch (System.Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpPost]
+        [Route("delete")]
+        public IHttpActionResult Delete([FromBody] CitiesDTO c)
+        {
+            if (c == null)
+                return BadRequest("City data is null");
+
+            try
+            {
+                bool result = cbl.Delete(c);
+                if (result)
+                    return Ok(new { success = true, message = "City deleted successfully" });
+                else
+                    return BadRequest("Failed to delete city");
+            }
+            catch (System.Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpGet]
+        [Route("getallcities")]
+        [Route("getall")]
+        public List<CitiesDTO> GetCity()
+        {
+            return cbl.GetCity();
+        }
+
+        [HttpGet]
+        [Route("getnext")]
+        public int GetNext()
+        {
+            return cbl.GetNext();
+        }
+    }
+}

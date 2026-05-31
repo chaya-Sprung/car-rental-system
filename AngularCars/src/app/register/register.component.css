@@ -1,0 +1,115 @@
+/* Background */
+.page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #141e30, #243b55);
+    font-family: 'Segoe UI', sans-serif;
+    padding: 20px;
+  }
+  
+  /* Glass Card */
+  .card {
+    width: 420px;
+    padding: 45px;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(25px);
+    box-shadow: 0 30px 70px rgba(0,0,0,0.5);
+    color: white;
+    animation: fadeIn 0.8s ease;
+  }
+  
+  .card-header h2 {
+    margin: 0;
+    font-size: 30px;
+  }
+  
+  .card-header p {
+    opacity: 0.7;
+    margin-bottom: 35px;
+  }
+  
+  /* Inputs */
+  .input-group {
+    position: relative;
+    margin-bottom: 28px;
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 14px 10px;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid rgba(255,255,255,0.3);
+    color: white;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+  }
+  
+  .input-group input:focus {
+    border-color: #4facfe;
+  }
+  
+  .input-group label {
+    position: absolute;
+    left: 10px;
+    top: 14px;
+    color: rgba(255,255,255,0.6);
+    pointer-events: none;
+    transition: 0.3s;
+  }
+  
+  .input-group input:focus + label,
+  .input-group input:not(:placeholder-shown) + label {
+    top: -10px;
+    font-size: 12px;
+    color: #4facfe;
+  }
+  
+  /* Button */
+  .primary-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(90deg, #4facfe, #00f2fe);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: bold;
+    margin-top: 15px;
+  }
+  
+  .primary-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(79,172,254,0.4);
+  }
+  
+  /* Login Link */
+  .login-link {
+    margin-top: 25px;
+    text-align: center;
+    font-size: 14px;
+    opacity: 0.85;
+  }
+  
+  .login-link a {
+    color: #4facfe;
+    text-decoration: none;
+    margin-left: 6px;
+    transition: 0.3s;
+  }
+  
+  .login-link a:hover {
+    color: #00f2fe;
+  }
+  
+  /* Animation */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }

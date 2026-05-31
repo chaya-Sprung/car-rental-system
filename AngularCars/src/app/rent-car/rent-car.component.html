@@ -1,0 +1,46 @@
+<div class="booking-card">
+  <div class="card-header">
+    <h2>הזמנת רכב: {{selectedCar.carCode}}</h2>
+    <span class="car-code">קוד רכב: {{selectedCar.carCode}}</span>
+  </div>
+
+  <div class="booking-body">
+    <div class="reserved-dates-section" *ngIf="existingRents.length > 0">
+      <label><i class="icon-calendar"></i> תאריכים לא פנויים:</label>
+      <div class="tags-container">
+        <span class="date-tag" *ngFor="let r of existingRents">
+          {{r.beginDate | date:'dd/MM/yy'}} - {{r.finishDate | date:'dd/MM/yy'}}
+        </span>
+      </div>
+    </div>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="startDate">תאריך יציאה</label>
+        <input type="date" id="startDate" [(ngModel)]="newRent.beginDate" class="custom-input">
+      </div>
+
+      <div class="form-group">
+        <label for="endDate">תאריך חזרה</label>
+        <input type="date" id="endDate" [(ngModel)]="newRent.finishDate" class="custom-input">
+      </div>
+    </div>
+
+    <div class="form-group full-width">
+      <label for="goal">מטרת הנסיעה</label>
+      <input type="text" id="goal" [(ngModel)]="newRent.rentGoal" 
+             placeholder="למשל: אירוע משפחתי, עבודה..." class="custom-input">
+    </div>
+
+    <div class="error-message" *ngIf="errorMessage">
+      <span class="error-icon">⚠️</span> {{errorMessage}}
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <button class="btn-cancel" (click)="onCancel()">ביטול</button>
+    <button class="btn-submit" (click)="saveBooking()">
+      אשר הזמנה ושמור בהיסטוריה
+    </button>
+  </div>
+</div>

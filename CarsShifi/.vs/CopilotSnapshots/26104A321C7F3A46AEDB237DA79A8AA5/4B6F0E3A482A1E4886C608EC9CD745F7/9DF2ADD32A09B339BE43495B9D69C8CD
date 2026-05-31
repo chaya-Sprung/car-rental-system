@@ -1,0 +1,125 @@
+﻿using BL.ClassesBL;
+using BL.ClassesDTO;
+using System;
+using System.Collections.Generic;
+using System.Web.Http;
+
+namespace API.Controllers
+{
+    [RoutePrefix("api/customers")]
+    public class CustomersController : ApiController
+    {
+        CustomersBL cbl = new CustomersBL();
+
+        [HttpGet]
+        [Route("getcustemerbyid/{id}")]
+        public CustomersDTO GetCustemerById(int id)
+        {
+            return cbl.GetCustomersById(id);
+        }
+
+        [HttpPost]
+        [Route("add")]
+        [Route("insertcustomer")]
+        public IHttpActionResult Add([FromBody] CustomersDTO c)
+        {
+            if (c == null)
+                return BadRequest("Customer data is null");
+
+            try
+            {
+                bool result = cbl.Add(c);
+                if (result)
+                    return Ok(new { success = true, message = "Customer added successfully" });
+                else
+                    return BadRequest("Failed to add customer");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpPost]
+        [Route("update")]
+        public IHttpActionResult Update([FromBody] CustomersDTO c)
+        {
+            if (c == null)
+                return BadRequest("Customer data is null");
+
+            try
+            {
+                bool result = cbl.Update(c);
+                if (result)
+                    return Ok(new { success = true, message = "Customer updated successfully" });
+                else
+                    return BadRequest("Failed to update customer");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpPost]
+        [Route("delete")]
+        public IHttpActionResult Delete([FromBody] CustomersDTO c)
+        {
+            if (c == null)
+                return BadRequest("Customer data is null");
+
+            try
+            {
+                bool result = cbl.Delete(c);
+                if (result)
+                    return Ok(new { success = true, message = "Customer deleted successfully" });
+                else
+                    return BadRequest("Failed to delete customer");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpGet]
+        [Route("getallcustomers")]
+        [Route("getall")]
+        public List<CustomersDTO> GetCustomers()
+        {
+            return cbl.GetCustomers();
+        }
+
+        [HttpGet]
+        [Route("getallcustomerssortedbyname")]
+        [Route("getallsorted")]
+        public List<CustomersDTO> GetCustomerBySort()
+        {
+            return cbl.GetCustomerBySort();
+        }
+
+        [HttpGet]
+        [Route("gettopthreeoldestcustomers")]
+        [Route("gettopthree")]
+        public List<CustomersDTO> GetThreeOld()
+        {
+            return cbl.GetThreeOld();
+        }
+
+        [HttpGet]
+        [Route("getcustomersbycity/{cityCode}")]
+        [Route("getbycity/{cityCode}")]
+        public List<CustomersDTO> GetCustomerByCity(int cityCode)
+        {
+            return cbl.GetCustomerByCity(cityCode);
+        }
+
+        [HttpGet]
+        [Route("getpaymentdetailsbyidentitynumber/{identityNumber}")]
+        [Route("getpayment/{identityNumber}")]
+        public PayMentsDTO GetCustomerPayMent(int identityNumber)
+        {
+            return cbl.GetCustomerPayMent(identityNumber);
+        }
+    }
+}}

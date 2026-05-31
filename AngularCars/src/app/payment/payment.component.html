@@ -1,0 +1,41 @@
+<div class="payment-container">
+  <div class="booking-card">
+    <div class="card-header">
+      <h2>פרטי תשלום</h2>
+      <span class="secure-tag">🔐 תשלום מאובטח</span>
+    </div>
+
+    <div class="booking-body">
+      <div class="form-group full-width">
+        <label for="cardNumber">מספר כרטיס אשראי</label>
+        <input type="text" id="cardNumber" [(ngModel)]="newPayment.creditCard" 
+               placeholder="1234 5678 1234 5678" class="custom-input">
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="validity">תוקף (MM/YY)</label>
+          <input type="text" id="validity" [(ngModel)]="newPayment.validit" 
+                 placeholder="05/28" class="custom-input">
+        </div>
+
+        <div class="form-group">
+          <label for="cvc">CVC</label>
+          <input type="number" id="cvc" [(ngModel)]="newPayment.cvc" 
+                 placeholder="123" class="custom-input">
+        </div>
+      </div>
+
+      <div class="error-message" *ngIf="errorMessage">
+        <span class="error-icon">⚠️</span> {{errorMessage}}
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <button class="btn-cancel" (click)="cancel()">ביטול</button>
+      <button class="btn-submit" [disabled]="isProcessing" (click)="submitPayment()">
+        {{ isProcessing ? 'מבצע תשלום...' : 'שלם עכשיו' }}
+      </button>
+    </div>
+  </div>
+</div>

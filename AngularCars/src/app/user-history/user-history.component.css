@@ -1,0 +1,60 @@
+.history-container {
+  padding: 10px;
+  direction: rtl;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.history-header h2 {
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.table-wrapper {
+  max-height: 400px;
+  overflow-y: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  text-align: right;
+}
+
+.history-table th {
+  background-color: #34495e;
+  color: white;
+  padding: 12px;
+  position: sticky;
+  top: 0;
+}
+
+.history-table td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.history-table tr:hover {
+  background-color: #f9f9f9;
+}
+
+.car-badge {
+  background-color: #e67e22;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: bold;
+}
+
+.no-data {
+  text-align: center;
+  padding: 40px;
+  color: #7f8c8d;
+}
+
+.loader {
+  text-align: center;
+  padding: 20px;
+}

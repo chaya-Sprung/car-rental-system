@@ -1,0 +1,77 @@
+<div class="cars-container">
+  <div class="appbar">
+    <div class="appbar-title">קטלוג רכבים להשכרה</div>
+    <button class="history-top-btn" (click)="openHistoryDialog()">📜 ההיסטוריה שלי</button>
+  </div>
+
+  <div class="page">
+    <div class="filter-section">
+      <h2>חיפוש רכב</h2>
+      <div class="filter-controls">
+        <div class="filter-group">
+          <label>מספר מקומות:</label>
+          <input type="number" [(ngModel)]="filterNumPlace">
+        </div>
+        <div class="filter-group">
+          <label>רמה:</label>
+          <input type="number" [(ngModel)]="filterLevel">
+        </div>
+        <div class="filter-group">
+          <label>מחיר מקסימלי:</label>
+          <input type="number" [(ngModel)]="filterMaxPrice">
+        </div>
+        <button class="cool-btn" (click)="applyFilters()">חפש רכב</button>
+        <button class="reset-btn" (click)="reset()">נקה הכל</button>
+      </div>
+      <p class="results-count" *ngIf="!isLoading">נמצאו {{ cars.length }} רכבים</p>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message" style="color: red; padding: 20px; text-align: center;">
+      <h3>{{ errorMessage }}</h3>
+    </div>
+    
+    <div *ngIf="isLoading" class="loading">טוען נתונים...</div>
+
+    <div class="cars-grid" *ngIf="!isLoading && cars.length > 0">
+      <div *ngFor="let car of cars" class="car-card">
+        <div class="car-header">
+          <h3>קוד רכב: #{{ car.carCode }}</h3>
+        </div>
+        <div class="car-details">
+          <div class="detail-item">
+            <label>רמה:</label> <span>{{ car.level }}</span>
+          </div>
+          <div class="detail-item">
+            <label>מקומות:</label> <span>{{ car.numPlace }}</span>
+          </div>
+          <div class="detail-item price">
+            <label>מחיר ליום:</label> <span class="price-value">₪{{ car.priceOfDay }}</span>
+          </div>
+        </div>
+        <div class="car-footer">
+          <button class="cool-btn" style="background-color: #27ae60;" (click)="openRentDialog(car)">
+            הזמן רכב
+          </button>
+          <button class="reset-btn" style="color: #d63031;" (click)="onDelete(car)">מחק רכב</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" *ngIf="isRentModalOpen && selectedCarForRent">
+    <div class="modal-content">
+      <button class="close-modal-x" (click)="closeRentDialog()">×</button>
+      <app-rent-car 
+        [selectedCar]="selectedCarForRent" 
+        (close)="closeRentDialog()">
+      </app-rent-car>
+    </div>
+  </div>
+
+  <div class="modal-overlay" *ngIf="isHistoryModalOpen">
+    <div class="modal-content history-modal">
+      <button class="close-modal-x" (click)="closeHistoryDialog()">×</button>
+      <app-user-history></app-user-history>
+    </div>
+  </div>
+</div>

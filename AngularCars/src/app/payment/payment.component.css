@@ -1,0 +1,66 @@
+.payment-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 20px;
+}
+
+.secure-tag {
+  font-size: 0.8rem;
+  background: #e8f5e9;
+  color: #2e7d32;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+/* שימוש בעיצוב הקיים שלך מההשכרה */
+.booking-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 450px;
+  overflow: hidden;
+}
+
+.card-header {
+  background: #f8f9fa;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.booking-body { padding: 20px; }
+
+.form-group { margin-bottom: 15px; display: flex; flex-direction: column; }
+
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+
+.custom-input {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.btn-submit {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-submit:disabled { background: #ccc; }
+
+.btn-cancel {
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+}

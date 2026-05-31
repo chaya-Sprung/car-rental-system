@@ -1,0 +1,39 @@
+<div class="history-container">
+  <div class="history-header">
+    <h2>היסטוריית ההשכרות של {{ userName }}</h2>
+    <hr>
+  </div>
+
+  <div *ngIf="isLoading" class="loader">
+    <p>טוען נתונים, אנא המתן...</p>
+  </div>
+
+  <div *ngIf="!isLoading && userRents.length > 0" class="table-wrapper">
+    <table class="history-table">
+      <thead>
+        <tr>
+          <th>קוד השכרה</th>
+          <th>קוד רכב</th>
+          <th>תאריך התחלה</th>
+          <th>תאריך סיום</th>
+          <th>מטרה</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let rent of userRents">
+          <td>#{{ rent.rentCode }}</td>
+          <td>
+            <span class="car-badge">{{ rent.carCode }}</span>
+          </td>
+          <td>{{ rent.beginDate | date:'dd/MM/yyyy' }}</td>
+          <td>{{ rent.finishDate | date:'dd/MM/yyyy' }}</td>
+          <td>{{ rent.rentGoal }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="!isLoading && userRents.length === 0" class="no-data">
+    <p>לא נמצאו השכרות קודמות במערכת.</p>
+  </div>
+</div>

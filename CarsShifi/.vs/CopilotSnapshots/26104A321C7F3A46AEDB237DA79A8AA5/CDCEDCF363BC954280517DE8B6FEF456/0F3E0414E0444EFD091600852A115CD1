@@ -1,0 +1,103 @@
+﻿using BL.ClassesBL;
+using BL.ClassesDTO;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Http;
+
+namespace API.Controllers
+{
+    [RoutePrefix("api/customers")]
+
+    public class CustomersController : ApiController
+    {
+        CustomersBL cbl = new CustomersBL();
+
+     //   [AcceptVerbs("Get", "Post")]
+
+        [Route("getcustemerbyid/{id}")]
+        [HttpGet]
+        public CustomersDTO GetCustemerById(int id)
+        {
+            return cbl.GetCustomersById(id);
+        }
+        //הוספה
+        [HttpPost]
+        [Route("insertclient")]
+        public IHttpActionResult InsertClient([FromBody] CustomersDTO clients)
+        {
+            if (clients == null) return BadRequest("Data is null");
+
+            try
+            {
+                var result = cbl.InsertClient(clients);
+
+                return Ok(result); // מחזיר OK 200 עם ההודעה מה-BL
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+
+        [Route("update/{c}")]
+        [HttpPost]
+        public bool Update(CustomersDTO c)
+        {
+            return cbl.Update(c);
+        }
+
+        [Route("delete/{c}")]
+        [HttpPost]
+        public bool Delete(CustomersDTO c)
+        {
+            return cbl.Delete(c);
+        }
+
+        [Route("getallcustomers")]
+        [HttpGet]
+        public List<CustomersDTO> GetCustomers()
+        {
+            return cbl.GetCustomers();
+        }
+
+
+        [Route("getallcustomerssortedbyname")]
+        [HttpGet]
+        public List<CustomersDTO> GetCustomerBySort()
+        {
+            return cbl.GetCustomerBySort();
+        }
+        //לקבל לפי תעודת זהות
+
+        [HttpGet]
+        public CustomersDTO GetCostomerByID(int id)
+        {
+            return cbl.Customerbyid(id);
+        }
+
+        [Route("gettopthreeoldestcustomers")]
+        [HttpGet]
+        public List<CustomersDTO> GetThreeOld()
+        {
+            return cbl.GetThreeOld();
+        }
+
+        [Route("getcustomersbycity/{cityCode}")]
+        [HttpGet]
+        public List<CustomersDTO> GetCustomerByCity(int cityCode)
+        {
+            return cbl.GetCustomerByCity(cityCode);
+        }
+        [Route("getpaymentdetailsbyidentitynumber/{identityNumber}")]
+        [HttpGet]
+        public PayMentsDTO GetCustomerPayMent(int identityNumber)
+        {
+            return cbl.GetCustomerPayMent(identityNumber);
+        }
+
+
+    }
+}

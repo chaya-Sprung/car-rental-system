@@ -1,0 +1,77 @@
+﻿using BL.ClassesBL;
+using BL.ClassesDTO;
+using System;
+using System.Collections.Generic;
+using System.Web.Http;
+
+namespace API.Controllers
+{
+    [RoutePrefix("api/customers")]
+    public class CustomersController : ApiController
+    {
+        CustomersBL cbl = new CustomersBL();
+
+        [HttpGet]
+        [Route("getcustemerbyid/{id}")]
+        public CustomersDTO GetCustemerById(int id)
+        {
+            return cbl.GetCustomersById(id);
+        }
+
+        [HttpPost]
+        [Route("add")]
+        public bool Add([FromBody] CustomersDTO c)
+        {
+            return cbl.Add(c);
+        }
+
+        [HttpPost]
+        [Route("update")]
+        public bool Update([FromBody] CustomersDTO c)
+        {
+            return cbl.Update(c);
+        }
+
+        [HttpPost]
+        [Route("delete")]
+        public bool Delete([FromBody] CustomersDTO c)
+        {
+            return cbl.Delete(c);
+        }
+
+        [HttpGet]
+        [Route("getallcustomers")]
+        public List<CustomersDTO> GetCustomers()
+        {
+            return cbl.GetCustomers();
+        }
+
+        [HttpGet]
+        [Route("getallcustomerssortedbyname")]
+        public List<CustomersDTO> GetCustomerBySort()
+        {
+            return cbl.GetCustomerBySort();
+        }
+
+        [HttpGet]
+        [Route("gettopthreeoldestcustomers")]
+        public List<CustomersDTO> GetThreeOld()
+        {
+            return cbl.GetThreeOld();
+        }
+
+        [HttpGet]
+        [Route("getcustomersbycity/{cityCode}")]
+        public List<CustomersDTO> GetCustomerByCity(int cityCode)
+        {
+            return cbl.GetCustomerByCity(cityCode);
+        }
+
+        [HttpGet]
+        [Route("getpaymentdetailsbyidentitynumber/{identityNumber}")]
+        public PayMentsDTO GetCustomerPayMent(int identityNumber)
+        {
+            return cbl.GetCustomerPayMent(identityNumber);
+        }
+    }
+}

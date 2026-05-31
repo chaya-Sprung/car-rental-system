@@ -1,0 +1,178 @@
+﻿using BL.ClassesDTO;
+using DAL;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace BL.ClassesBL
+{
+    public class CustomersBL
+    {
+        DBConection conn = new DBConection();
+
+        // Get customer by ID
+        public CustomersDTO GetCustomersById(int id)
+        {
+            List<CustomersDTO> list = Convert(conn.GetDbSet<Customers>());
+            return list.FirstOrDefault(c => c.Id == id);
+        }
+
+        // Add customer
+        public bool Add(CustomersDTO c)
+        {
+            Customers c1 = Convert(c);
+            try
+            {
+                conn.Execute<Customers>(c1, DBConection.ExecuteActions.Insert);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        // Update customer
+        public bool Update(CustomersDTO c)
+        {
+            Customers c1 = Convert(c);
+            try
+            {
+                conn.Execute<Customers>(c1, DBConection.ExecuteActions.Update);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        // Delete customer
+        public bool Delete(CustomersDTO c)
+        {
+            Customers c1 = Convert(c);
+            try
+            {
+                conn.Execute<Customers>(c1, DBConection.ExecuteActions.Delete);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        // Get next customer code
+        public int GetNext()
+        {
+            int code = conn.GetDbSet<Customers>().Count();
+            return ++code;
+        }
+
+        // Get all customers
+        public List<CustomersDTO> GetCustomers()
+        {
+            List<CustomersDTO> list = Convert(conn.GetDbSet<Customers>());
+            return list;
+        }
+
+        // Get customers sorted by name
+        public List<CustomersDTO> GetCustomerBySort()
+        {
+            List<CustomersDTO> list = Convert(conn.GetDbSet<Customers>().ToList());
+            return list.OrderBy(c => c.firstName).ThenBy(c => c.lastName).ToList();
+        }
+
+        // Get top 3 oldest customers (by number of rentals)
+        public List<CustomersDTO> GetThreeOld()
+        {
+            List<CustomersDTO> list = Convert(conn.GetDbSet<Customers>().ToList());
+            return list.OrderByDescending(c => c.numOfLending).Take(3).ToList();
+        }
+
+        // Get customers from a specific city
+        public List<CustomersDTO> GetCustomerByCity(int cityCode)
+        {
+            List<CustomersDTO> list = Convert(conn.GetDbSet<Customers>().ToList());
+            return list.Where(c => c.idCity == cityCode).ToList();
+        }
+
+        // Get customer payment details by ID
+        public PayMentsDTO GetCustomerPayMent(int id)
+        {
+            PayMentsBL payMentsBL = new PayMentsBL();
+            List<CustomersDTO> list = Convert(conn.GetDbSet<Customers>().ToList());
+            CustomersDTO c = list.FirstOrDefault(customer => customer.Id == id);
+            
+            if (c == null)
+                return null;
+
+            // Get payment by code
+            List<PayMents> payments = conn.GetDbSet<PayMents>();
+            PayMents payment = payments.FirstOrDefault(p => p.paymentCode == c.codePayment);
+            
+            if (payment == null)
+                return null;
+
+            return payMentsBL.Convert(payment);
+        }
+
+        // Convert Customers (DAL) to CustomersDTO (DTO)
+        public CustomersDTO Convert(Customers c)
+        {
+            if (c == null)
+                return null;
+
+            CustomersDTO cdt = new CustomersDTO();
+            cdt.Id = c.Id;
+            cdt.firstName = c.firstName;
+            cdt.lastName = c.lastName;
+            cdt.email = c.email;
+            cdt.idCity = c.idCity;
+            cdt.numOfLending = c.numOfLending;
+            cdt.codePayment = c.codePayment;
+            return cdt;
+        }
+
+        // Convert CustomersDTO (DTO) to Customers (DAL)
+        public Customers Convert(CustomersDTO cdt)
+        {
+            if (cdt == null)
+                return null;
+
+            Customers c = new Customers();
+            c.Id = cdt.Id;
+            c.firstName = cdt.firstName;
+            c.lastName = cdt.lastName;
+            c.email = cdt.email;
+            c.idCity = cdt.idCity;
+            c.numOfLending = cdt.numOfLending;
+            c.codePayment = cdt.codePayment;
+            c.PayMents = null;
+            c.Cities = null;
+            return c;
+        }
+
+        // Convert list of Customers to CustomersDTO
+        public List<CustomersDTO> Convert(List<Customers> list)
+        {
+            List<CustomersDTO> lcdt = new List<CustomersDTO>();
+            foreach (Customers c in list)
+            {
+                lcdt.Add(Convert(c));
+            }
+            return lcdt;
+        }
+
+        // Convert list of CustomersDTO to Customers
+        public List<Customers> Convert(List<CustomersDTO> list)
+        {
+            List<Customers> lcdt = new List<Customers>();
+            foreach (CustomersDTO c in list)
+            {
+                lcdt.Add(Convert(c));
+            }
+            return lcdt;
+        }
+    }
+}
