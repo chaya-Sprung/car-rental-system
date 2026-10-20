@@ -1,6 +1,3 @@
-הנה כל תוכן ה-README כטקסט נקי (Raw Markdown) בתוך תיבת קוד אחת מסודרת.
-
-לחצי על כפתור ה-Copy (העתק) שנמצא בפינה של התיבה, ואז הדביקי ישירות לתוך הקובץ README.md:
 
 Markdown
 # 🚗 Car Rental Management System
